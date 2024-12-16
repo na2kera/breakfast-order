@@ -38,8 +38,8 @@ const OrderPage = () => {
     const orderId = orderData[0].id;
 
     const { error: detailsError } = await supabase.from("details").insert([
-      { order_id: orderId, item: "Japanese Set", quantity: japaneseSet },
-      { order_id: orderId, item: "Western Set", quantity: westernSet },
+      { order_id: orderId, product: "和食セット", number: japaneseSet },
+      { order_id: orderId, product: "洋食セット", number: westernSet },
     ]);
 
     if (detailsError) {
