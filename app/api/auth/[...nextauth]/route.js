@@ -20,6 +20,7 @@ const authOptions = {
       return session;
     },
   },
+  secret: process.env.NEXTAUTH_SECRET,
 };
 
 // GET と POST の両方のハンドラーを作成
