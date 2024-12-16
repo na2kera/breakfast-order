@@ -11,6 +11,9 @@ export default function Home() {
     const fetchData = async () => {
       const { data, error } = await supabase.from("test").select("*");
       console.log(data);
+      if (error) {
+        console.error(error);
+      }
     };
 
     fetchData();
