@@ -25,7 +25,7 @@ const SaveUser = () => {
       if (error) {
         console.error(error);
       } else {
-        router.push("/");
+        router.push("/mypage");
       }
     };
     sendUserData();
