@@ -21,18 +21,28 @@ export default function Home() {
 
   if (session) {
     return (
-      <>
-        <h1>Signed in as {session?.user?.email}</h1>
-        <button onClick={() => signOut()}>Sign out</button>
-      </>
+      <div className="text-center mt-12">
+        <h1 className="text-2xl font-bold">
+          Signed in as {session?.user?.email}
+        </h1>
+        <button
+          className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          onClick={() => signOut()}
+        >
+          Sign out
+        </button>
+      </div>
     );
   }
   return (
-    <>
-      <h1>Not signed in</h1>
-      <button onClick={() => signIn("google", { callbackUrl: "/saveuser" })}>
+    <div className="text-center mt-12">
+      <h1 className="text-2xl font-bold">Not signed in</h1>
+      <button
+        className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+        onClick={() => signIn("google", { callbackUrl: "/saveuser" })}
+      >
         Sign in
       </button>
-    </>
+    </div>
   );
 }
