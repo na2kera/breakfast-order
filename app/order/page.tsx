@@ -1,12 +1,56 @@
 "use client";
 import React, { useState } from "react";
+import { supabase } from "../utils/supabase/server";
+import { useSession } from "next-auth/react";
 
 const OrderPage = () => {
+  const { data: session } = useSession();
   const [japaneseSet, setJapaneseSet] = useState(0);
   const [westernSet, setWesternSet] = useState(0);
 
-  const handleOrderSubmit = () => {
+  const handleOrderSubmit = async () => {
     // Handle order submission logic here
+
+    const { data: userData, error: userError } = await supabase
+      .from("users")
+      .select("id")
+      .eq("email", session?.user?.email)
+      .single();
+
+    if (userError) {
+      console.error(userError);
+      return;
+    }
+
+    const { data: orderData, error: orderError } = await supabase
+      .from("orders")
+      .insert([{ user_id: userData.id, is_received: false }])
+      .select()
+      .single();
+
+    if (orderError) {
+      console.error(orderError);
+      return;
+    }
+
+    const { error: detailsError } = await supabase.from("details").insert([
+      {
+        order_id: orderData.id,
+        product: "Japanese Set",
+        number: japaneseSet,
+      },
+      {
+        order_id: orderData.id,
+        product: "Western Set",
+        number: westernSet,
+      },
+    ]);
+
+    if (detailsError) {
+      console.error(detailsError);
+      return;
+    }
+
     console.log(`Japanese Set: ${japaneseSet}, Western Set: ${westernSet}`);
     alert("注文が確定されました！");
   };
