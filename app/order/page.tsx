@@ -9,7 +9,10 @@ const OrderPage = () => {
   const [westernSet, setWesternSet] = useState(0);
 
   const handleOrderSubmit = async () => {
-    // Handle order submission logic here
+    if (japaneseSet === 0 && westernSet === 0) {
+      alert("少なくとも1つの商品を選択してください。");
+      return;
+    }
 
     const { data: userData, error: userError } = await supabase
       .from("users")
@@ -25,25 +28,18 @@ const OrderPage = () => {
     const { data: orderData, error: orderError } = await supabase
       .from("orders")
       .insert([{ user_id: userData.id, is_received: false }])
-      .select()
-      .single();
+      .select();
 
     if (orderError) {
       console.error(orderError);
       return;
     }
 
+    const orderId = orderData[0].id;
+
     const { error: detailsError } = await supabase.from("details").insert([
-      {
-        order_id: orderData.id,
-        product: "Japanese Set",
-        number: japaneseSet,
-      },
-      {
-        order_id: orderData.id,
-        product: "Western Set",
-        number: westernSet,
-      },
+      { order_id: orderId, product: "和食セット", number: japaneseSet },
+      { order_id: orderId, product: "洋食セット", number: westernSet },
     ]);
 
     if (detailsError) {
