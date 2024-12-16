@@ -30,7 +30,9 @@ export default function Home() {
   return (
     <>
       <h1>Not signed in</h1>
-      <button onClick={() => signIn("google")}>Sign in</button>
+      <button onClick={() => signIn("google", { callbackUrl: "/saveuser" })}>
+        Sign in
+      </button>
     </>
   );
 }
