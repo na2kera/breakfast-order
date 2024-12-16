@@ -27,7 +27,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "app/api/auth/[...nextauth]/route.js"
+    "app/api/auth/[...nextauth]/route.js",
+    "app/utils/supabase/server.js"
   ],
   "exclude": ["node_modules"]
 }
