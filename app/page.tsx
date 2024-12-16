@@ -1,9 +1,23 @@
 "use client";
-
+import { useEffect } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
+import { supabase } from "./utils/supabase/server";
 
 export default function Home() {
   const { data: session } = useSession();
+
+  //supabaseから値を取り出す
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data, error } = await supabase.from("test").select("*");
+      console.log(data);
+      if (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   if (session) {
     return (
