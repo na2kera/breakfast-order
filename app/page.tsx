@@ -2,9 +2,12 @@
 import { useEffect } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { supabase } from "./utils/supabase/server";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const { data: session } = useSession();
+
+  const router = useRouter();
 
   //supabaseから値を取り出す
   useEffect(() => {
@@ -20,6 +23,7 @@ export default function Home() {
   }, []);
 
   if (session) {
+    router.push("/mypage");
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
