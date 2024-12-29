@@ -7,6 +7,11 @@ interface Order {
   created_at: string;
   user_id: string;
   is_received: boolean;
+  details: {
+    id: string;
+    product: string;
+    number: number;
+  }[];
 }
 
 const Page = () => {
@@ -14,9 +19,16 @@ const Page = () => {
 
   useEffect(() => {
     const fetchOrders = async () => {
-      const { data, error } = await supabase.from("orders").select("*");
+      const { data, error } = await supabase
+        .from("orders")
+        .select(
+          `id, created_at, user_id, is_received, details(id, product, number)`
+        )
+        .eq("is_received", false);
+
       if (error) {
         console.error(error);
+
         return;
       }
       setOrders(data || []);
@@ -42,6 +54,8 @@ const Page = () => {
       )
     );
   };
+
+  console.log(orders);
 
   return (
     <div className="container mx-auto p-6 bg-gray-50 min-h-screen">
