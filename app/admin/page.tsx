@@ -81,6 +81,17 @@ const Page = () => {
               minute: "2-digit",
             })}
           </div>
+          {order.details.map((detail) => (
+            <div
+              key={detail.id}
+              className="flex justify-between p-2 border-b border-gray-200"
+            >
+              <span className="font-medium text-gray-700">
+                {detail.product}
+              </span>
+              <span className="font-normal text-gray-500">{detail.number}</span>
+            </div>
+          ))}
           {!order.is_received && (
             <button
               onClick={() => handleMarkAsReceived(order.id)}
