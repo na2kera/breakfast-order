@@ -57,13 +57,15 @@ const OrderPage = () => {
       <h1 className="text-2xl font-bold mb-4">注文フォーム</h1>
       <div className="mb-4">
         <label className="block mb-2">和食セット（個数を選択）</label>
-        <Image
-          src="/images/79347718.jpg"
-          alt="和食セット"
-          width={256}
-          height={160}
-          className="object-cover mb-2"
-        />
+        <div className="relative w-64 h-40 mb-2">
+          <Image
+            src="/images/79347718.jpg"
+            alt="和食セット"
+            layout="fill"
+            objectFit="cover"
+            className="rounded"
+          />
+        </div>
         <input
           type="number"
           value={japaneseSet}
@@ -74,13 +76,15 @@ const OrderPage = () => {
       </div>
       <div className="mb-4">
         <label className="block mb-2">洋食セット（個数を選択）</label>
-        <Image
-          src="/images/79347716.jpg"
-          alt="洋食セット"
-          width={256}
-          height={160}
-          className="object-cover mb-2"
-        />
+        <div className="relative w-64 h-40 mb-2">
+          <Image
+            src="/images/79347716.jpg"
+            alt="洋食セット"
+            layout="fill"
+            objectFit="cover"
+            className="rounded"
+          />
+        </div>
         <input
           type="number"
           value={westernSet}
