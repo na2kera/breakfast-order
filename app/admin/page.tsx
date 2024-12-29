@@ -7,6 +7,11 @@ interface Order {
   created_at: string;
   user_id: string;
   is_received: boolean;
+  details: {
+    id: string;
+    product: string;
+    number: number;
+  }[];
 }
 
 const Page = () => {
@@ -14,9 +19,16 @@ const Page = () => {
 
   useEffect(() => {
     const fetchOrders = async () => {
-      const { data, error } = await supabase.from("orders").select("*");
+      const { data, error } = await supabase
+        .from("orders")
+        .select(
+          `id, created_at, user_id, is_received, details(id, product, number)`
+        )
+        .eq("is_received", false);
+
       if (error) {
         console.error(error);
+
         return;
       }
       setOrders(data || []);
@@ -43,9 +55,11 @@ const Page = () => {
     );
   };
 
+  console.log(orders);
+
   return (
     <div className="container mx-auto p-6 bg-gray-50 min-h-screen">
-      <h1 className="text-2xl font-bold mb-4">Order List</h1>
+      <h1 className="text-2xl font-bold mb-4">未受取の注文</h1>
       {orders.map((order) => (
         <div
           key={order.id}
@@ -61,7 +75,23 @@ const Page = () => {
               {order.is_received ? "受取済み" : "未受取"}
             </div>
           </div>
-          <div className="text-sm text-gray-500">{order.created_at}</div>
+          <div className="text-sm text-gray-500">
+            {new Date(order.created_at).toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
+          </div>
+          {order.details.map((detail) => (
+            <div
+              key={detail.id}
+              className="flex justify-between p-2 border-b border-gray-200"
+            >
+              <span className="font-medium text-gray-700">
+                {detail.product}
+              </span>
+              <span className="font-normal text-gray-500">{detail.number}</span>
+            </div>
+          ))}
           {!order.is_received && (
             <button
               onClick={() => handleMarkAsReceived(order.id)}
