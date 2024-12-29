@@ -6,8 +6,8 @@ import Image from "next/image";
 
 const OrderPage = () => {
   const { data: session } = useSession();
-  const [japaneseSet, setJapaneseSet] = useState(0);
-  const [westernSet, setWesternSet] = useState(0);
+  const [japaneseSet, setJapaneseSet] = useState(1);
+  const [westernSet, setWesternSet] = useState(1);
 
   const handleOrderSubmit = async () => {
     if (japaneseSet === 0 && westernSet === 0) {
@@ -66,13 +66,17 @@ const OrderPage = () => {
             className="rounded"
           />
         </div>
-        <input
-          type="number"
+        <select
           value={japaneseSet}
           onChange={(e) => setJapaneseSet(Number(e.target.value))}
           className="px-4 py-2 border rounded"
-          min="0"
-        />
+        >
+          {[0, 1, 2, 3, 4, 5].map((number) => (
+            <option key={number} value={number}>
+              {number}
+            </option>
+          ))}
+        </select>
       </div>
       <div className="mb-4">
         <label className="block mb-2">洋食セット（個数を選択）</label>
@@ -85,13 +89,17 @@ const OrderPage = () => {
             className="rounded"
           />
         </div>
-        <input
-          type="number"
+        <select
           value={westernSet}
           onChange={(e) => setWesternSet(Number(e.target.value))}
           className="px-4 py-2 border rounded"
-          min="0"
-        />
+        >
+          {[0, 1, 2, 3, 4, 5].map((number) => (
+            <option key={number} value={number}>
+              {number}
+            </option>
+          ))}
+        </select>
       </div>
       <button
         onClick={handleOrderSubmit}
