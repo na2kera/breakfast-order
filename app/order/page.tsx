@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { supabase } from "../utils/supabase/server";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 
 const OrderPage = () => {
   const { data: session } = useSession();
@@ -56,6 +57,13 @@ const OrderPage = () => {
       <h1 className="text-2xl font-bold mb-4">注文フォーム</h1>
       <div className="mb-4">
         <label className="block mb-2">和食セット（個数を選択）</label>
+        <Image
+          src="/images/79347718.jpg"
+          alt="和食セット"
+          width={256}
+          height={160}
+          className="object-cover mb-2"
+        />
         <input
           type="number"
           value={japaneseSet}
@@ -66,6 +74,13 @@ const OrderPage = () => {
       </div>
       <div className="mb-4">
         <label className="block mb-2">洋食セット（個数を選択）</label>
+        <Image
+          src="/images/79347716.jpg"
+          alt="洋食セット"
+          width={256}
+          height={160}
+          className="object-cover mb-2"
+        />
         <input
           type="number"
           value={westernSet}
