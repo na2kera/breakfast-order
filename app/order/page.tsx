@@ -3,11 +3,14 @@ import React, { useState } from "react";
 import { supabase } from "../utils/supabase/server";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const OrderPage = () => {
   const { data: session } = useSession();
-  const [japaneseSet, setJapaneseSet] = useState(1);
-  const [westernSet, setWesternSet] = useState(1);
+  const [japaneseSet, setJapaneseSet] = useState(0);
+  const [westernSet, setWesternSet] = useState(0);
+
+  const router = useRouter();
 
   const handleOrderSubmit = async () => {
     if (japaneseSet === 0 && westernSet === 0) {
@@ -50,6 +53,7 @@ const OrderPage = () => {
 
     console.log(`Japanese Set: ${japaneseSet}, Western Set: ${westernSet}`);
     alert("注文が確定されました！");
+    router.push("/history");
   };
 
   return (
