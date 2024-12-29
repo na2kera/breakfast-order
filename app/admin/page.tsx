@@ -75,7 +75,12 @@ const Page = () => {
               {order.is_received ? "受取済み" : "未受取"}
             </div>
           </div>
-          <div className="text-sm text-gray-500">{order.created_at}</div>
+          <div className="text-sm text-gray-500">
+            {new Date(order.created_at).toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
+          </div>
           {!order.is_received && (
             <button
               onClick={() => handleMarkAsReceived(order.id)}
